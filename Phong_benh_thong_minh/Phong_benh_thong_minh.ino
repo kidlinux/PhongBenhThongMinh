@@ -47,7 +47,6 @@ void loop() {
     CoNguoiTrongNhaVeSinh = interruptCount; // Cập nhật trạng thái trước đó
     digitalWrite(DENVS,CoNguoiTrongNhaVeSinh);
   }
-
 }
 
 void DocDHT()
@@ -60,7 +59,7 @@ void DocDHT()
   Serial.print("Độ ẩm (%): ");
   Serial.println(doam);
   
-  delay(1000);
+  delay(300);
 }
 
 void KiemTraBenhNhan()
@@ -71,16 +70,23 @@ void KiemTraBenhNhan()
   if(benhnhan==0 && nhietdo>31)
   {
     BatQuatGio();
-    BatQuatHut();
   }else
   {
     TatQuatGio();
+  }
+
+  // Nếu có bệnh nhân và độ ẩm cao 
+  if(benhnhan==0 && doam>70)
+  {
+    BatQuatHut();
+  }else
+  {
     TatQuatHut();
   }
 
   Serial.print("Bệnh nhân: ");
   Serial.println(benhnhan);
-  delay(1000);
+  delay(300);
 }
 
 void DocAmThanh()
