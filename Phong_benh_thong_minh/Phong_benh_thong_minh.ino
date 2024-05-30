@@ -47,6 +47,10 @@ void loop() {
     CoNguoiTrongNhaVeSinh = interruptCount; // Cập nhật trạng thái trước đó
     digitalWrite(DENVS,CoNguoiTrongNhaVeSinh);
   }
+
+  // Dừng lại kiểm tra kết quả
+  // Khi hoàn chỉnh sẽ gỡ lệnh này
+  //delay(2000);
 }
 
 void DocDHT()
@@ -59,7 +63,7 @@ void DocDHT()
   Serial.print("Độ ẩm (%): ");
   Serial.println(doam);
   
-  delay(300);
+  delay(100);
 }
 
 void KiemTraBenhNhan()
@@ -67,7 +71,7 @@ void KiemTraBenhNhan()
   int benhnhan=digitalRead(GiuongBenh);
 
   // Kiểm tra nếu có bệnh nhân
-  if(benhnhan==0 && nhietdo>31)
+  if(benhnhan==0 && nhietdo>27)
   {
     BatQuatGio();
   }else
@@ -86,17 +90,19 @@ void KiemTraBenhNhan()
 
   Serial.print("Bệnh nhân: ");
   Serial.println(benhnhan);
-  delay(300);
+  delay(100);
 }
 
 void DocAmThanh()
 {
-  int amthanh=analogRead(AmThanh);
+  //int amthanh=analogRead(AmThanh);
+  int amthanh=digitalRead(AmThanh);
   Serial.print("Âm thanh: ");
   Serial.println(amthanh);
 
   //Cường độ âm thanh càng lớn thì giá trị trả về càng nhỏ
-  if (amthanh<25){
+  // Nếu cường độ âm thanh vượt quá ngưỡng thì cảnh báo nhắc nhở
+  if (amthanh==0){
     BatDenBao();
   }else{
     TatDenBao();
